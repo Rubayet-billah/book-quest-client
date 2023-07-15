@@ -28,7 +28,7 @@ const Login = () => {
         className="flex max-w-md md:w-96 flex-col gap-4 mx-auto md:mt-36"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-2xl md:text-5xl text-center font-bold">Sign In</h1>
+        <h1 className="text-2xl md:text-4xl text-center font-bold">Sign In</h1>
         <div>
           <div className="mb-2 block">
             <Label htmlFor="email1" value="Your email" />
