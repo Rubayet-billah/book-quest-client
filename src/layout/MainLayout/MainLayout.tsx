@@ -6,9 +6,11 @@ const MainLayout = () => {
   return (
     <div>
       <Header />
-      <Outlet>
-        <Home />
-      </Outlet>
+      <section className="max-w-7xl mx-auto px-3 md:px-0">
+        <Outlet>
+          <Home />
+        </Outlet>
+      </section>
     </div>
   );
 };
