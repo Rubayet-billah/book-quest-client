@@ -1,7 +1,12 @@
 import { Button, Card } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { IBook } from "./interface";
 
-const BookCard = ({ book }) => {
+interface EditBookProps {
+  book: IBook;
+}
+
+const BookCard: React.FC<EditBookProps> = ({ book }) => {
   const { _id, title, author, price, genre, publishYear, featured } = book;
   return (
     <div>
@@ -26,7 +31,7 @@ const BookCard = ({ book }) => {
             <strong>Featured</strong>
           </p>
         )}
-        <Link to={`/book/${_id}`}>
+        <Link to={`/book/${_id as string}`}>
           <Button color="purple" className="w-full">
             <p>Book Details</p>
           </Button>

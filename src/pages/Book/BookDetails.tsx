@@ -61,7 +61,6 @@ const BookDetails: React.FC = () => {
             ))}
           </div>
         </div>
-
         <div>
           <h2 className="text-xl font-bold">Leave a Review</h2>
           <form className="flex flex-col gap-4">
