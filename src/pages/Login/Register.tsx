@@ -1,9 +1,11 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { Label, TextInput, Checkbox, Button } from "flowbite-react";
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(true);
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -13,13 +15,22 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+  const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.target.value);
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = {
-      email,
-      password,
-    };
-    console.log(formData);
+    if (password === confirmPassword) {
+      const formData = {
+        email,
+        password,
+      };
+      console.log(formData);
+      setPasswordMatch(true);
+    } else {
+      setPasswordMatch(false);
+    }
   };
 
   return (
@@ -28,7 +39,7 @@ const Login = () => {
         className="flex max-w-md md:w-96 flex-col gap-4 mx-auto md:mt-36"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-2xl md:text-5xl text-center font-bold">Sign In</h1>
+        <h1 className="text-2xl md:text-5xl text-center font-bold">Sign Up</h1>
         <div>
           <div className="mb-2 block">
             <Label htmlFor="email1" value="Your email" />
@@ -54,14 +65,29 @@ const Login = () => {
             onChange={handlePasswordChange}
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div>
+          <div className="mb-2 block">
+            <Label htmlFor="confirmPassword" value="Confirm password" />
+          </div>
+          <TextInput
+            id="confirmPassword"
+            required
+            type="password"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+          />
+          {!passwordMatch && (
+            <p className="text-red-500 text-sm">Passwords do not match</p>
+          )}
+        </div>
+        {/* <div className="flex items-center gap-2">
           <Checkbox id="remember" />
           <Label htmlFor="remember">Remember me</Label>
-        </div>
-        <Button type="submit">Login</Button>
+        </div> */}
+        <Button type="submit">Register</Button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;
