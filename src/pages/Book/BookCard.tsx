@@ -1,7 +1,8 @@
 import { Button, Card } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 const BookCard = ({ book }) => {
-  const { title, author, price, genre, publishYear, featured } = book;
+  const { _id, title, author, price, genre, publishYear, featured } = book;
   return (
     <div>
       <Card className="max-w-sm relative">
@@ -25,9 +26,11 @@ const BookCard = ({ book }) => {
             <strong>Featured</strong>
           </p>
         )}
-        <Button color="purple">
-          <p>Read more</p>
-        </Button>
+        <Link to={`/book/${5246513216}`}>
+          <Button color="purple" className="w-full">
+            <p>Book Details</p>
+          </Button>
+        </Link>
       </Card>
     </div>
   );
