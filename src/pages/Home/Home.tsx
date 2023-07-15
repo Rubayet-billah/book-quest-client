@@ -1,4 +1,5 @@
 import { Button, Card } from "flowbite-react";
+import Header from "../shared/Header/Header";
 
 const Home = () => {
   return (
