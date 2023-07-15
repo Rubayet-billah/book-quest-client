@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { Label, TextInput, Checkbox, Button } from "flowbite-react";
 
 const AddNewBook = () => {
@@ -7,7 +7,7 @@ const AddNewBook = () => {
     author: "",
     price: "",
     genre: "",
-    publishYear: 0,
+    publishYear: "",
     featured: false,
   });
 
@@ -20,7 +20,6 @@ const AddNewBook = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(book);
-    // Handle book submission logic here
   };
 
   return (
@@ -93,7 +92,7 @@ const AddNewBook = () => {
           id="publishYear"
           placeholder="Enter publish year"
           required
-          type="number"
+          type="text"
           name="publishYear"
           value={book.publishYear}
           onChange={handleInputChange}
