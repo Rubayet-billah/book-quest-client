@@ -1,14 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { Label, TextInput, Checkbox, Button } from "flowbite-react";
+import { IBook } from "./interface";
 
-interface IBook {
-  title: string;
-  author: string;
-  price: string;
-  genre: string;
-  publishYear: string;
-  featured: boolean;
-}
 interface EditBookProps {
   book: IBook;
 }

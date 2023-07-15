@@ -26,7 +26,7 @@ const BookCard = ({ book }) => {
             <strong>Featured</strong>
           </p>
         )}
-        <Link to={`/book/${5246513216}`}>
+        <Link to={`/book/${_id}`}>
           <Button color="purple" className="w-full">
             <p>Book Details</p>
           </Button>
