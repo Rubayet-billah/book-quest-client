@@ -108,7 +108,9 @@ const AddNewBook = () => {
         />
         <Label htmlFor="featured">Featured</Label>
       </div>
-      <Button type="submit">Add Book</Button>
+      <Button color="purple" type="submit">
+        Add Book
+      </Button>
     </form>
   );
 };

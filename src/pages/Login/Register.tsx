@@ -84,7 +84,9 @@ const Register = () => {
           <Checkbox id="remember" />
           <Label htmlFor="remember">Remember me</Label>
         </div> */}
-        <Button type="submit">Register</Button>
+        <Button color="purple" type="submit">
+          Register
+        </Button>
       </form>
     </div>
   );

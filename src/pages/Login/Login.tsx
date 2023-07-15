@@ -58,7 +58,9 @@ const Login = () => {
           <Checkbox id="remember" />
           <Label htmlFor="remember">Remember me</Label>
         </div>
-        <Button type="submit">Login</Button>
+        <Button color="purple" type="submit">
+          Login
+        </Button>
       </form>
     </div>
   );
