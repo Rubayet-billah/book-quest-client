@@ -25,7 +25,7 @@ const AddNewBook = () => {
 
   return (
     <form
-      className="flex max-w-md md:w-96 flex-col gap-4 mx-auto md:mt-36"
+      className="flex max-w-md md:w-96 flex-col gap-4 mx-auto md:mt-12"
       onSubmit={handleSubmit}
     >
       <h1 className="text-2xl md:text-4xl text-center font-bold">Add Book</h1>
@@ -63,7 +63,7 @@ const AddNewBook = () => {
         </div>
         <TextInput
           id="price"
-          placeholder="Enter price"
+          placeholder="$USD"
           required
           type="text"
           name="price"
