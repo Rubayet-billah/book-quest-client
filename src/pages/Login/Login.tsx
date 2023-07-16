@@ -1,9 +1,18 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { Label, TextInput, Checkbox, Button } from "flowbite-react";
+import { useLoginUserMutation } from "../../redux/features/auth/authApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
+import { useAppDispatch } from "../../redux/hook";
+import { setUser } from "../../redux/features/auth/authSlice";
 
 const Login = () => {
+  const [login, { data, isLoading, isError, isSuccess }] =
+    useLoginUserMutation();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -19,8 +28,20 @@ const Login = () => {
       email,
       password,
     };
-    console.log(formData);
+    login(formData);
   };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
+    }
+    if (isSuccess && data) {
+      const { email, accessToken } = data?.data;
+      dispatch(setUser({ email, accessToken }));
+      toast.success("Login successfull");
+      navigate("/");
+    }
+  }, [data, isError, isSuccess, navigate, dispatch]);
 
   return (
     <div>

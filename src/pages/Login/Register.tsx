@@ -43,7 +43,6 @@ const Register = () => {
   };
 
   useEffect(() => {
-    console.log(data, isError, error);
     if (isError) {
       toast.error(error?.data?.message);
     }
@@ -53,7 +52,7 @@ const Register = () => {
       toast.success("Registration successfull");
       navigate("/");
     }
-  }, [data, isError, error, isSuccess, navigate]);
+  }, [data, isError, error, isSuccess, navigate, dispatch]);
 
   return (
     <div>
