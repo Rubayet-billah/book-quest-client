@@ -6,6 +6,7 @@ import Register from "../pages/Login/Register";
 import AddNewBook from "../pages/Book/AddNewBook";
 import EditBook from "../pages/Book/EditBook";
 import BookDetails from "../pages/Book/BookDetails";
+import PrivateRoute from "../pages/shared/PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,14 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "/add", element: <AddNewBook /> },
+      {
+        path: "/add",
+        element: (
+          <PrivateRoute>
+            <AddNewBook />
+          </PrivateRoute>
+        ),
+      },
       { path: "/edit", element: <EditBook /> },
       { path: "/book/:id", element: <BookDetails /> },
       { path: "/login", element: <Login /> },

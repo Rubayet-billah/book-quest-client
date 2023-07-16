@@ -6,6 +6,7 @@ interface IAuth {
     email: string | undefined;
     accessToken: string | undefined;
   };
+  loading: boolean;
 }
 
 const initialState: IAuth = {
@@ -13,6 +14,7 @@ const initialState: IAuth = {
     email: undefined,
     accessToken: undefined,
   },
+  loading: true,
 };
 
 const authSlice = createSlice({
@@ -24,8 +26,11 @@ const authSlice = createSlice({
       state.user.accessToken = action.payload.accessToken;
       localStorage.setItem("auth", JSON.stringify(action.payload));
     },
+    setLoading: (state, action: PayloadAction) => {
+      state.loading = action.payload;
+    },
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, setLoading } = authSlice.actions;
 export default authSlice.reducer;

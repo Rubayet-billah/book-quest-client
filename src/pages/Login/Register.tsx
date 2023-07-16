@@ -4,7 +4,7 @@ import { useRegisterUserMutation } from "../../redux/features/auth/authApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "../../redux/hook";
-import { setUser } from "../../redux/features/auth/authSlice";
+import { setLoading, setUser } from "../../redux/features/auth/authSlice";
 
 const Register = () => {
   const [register, { data, error, isError, isLoading, isSuccess }] =
@@ -30,6 +30,7 @@ const Register = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(setLoading(true));
     if (password === confirmPassword) {
       const formData = {
         email,
@@ -51,8 +52,9 @@ const Register = () => {
       dispatch(setUser({ email, accessToken }));
       toast.success("Registration successfull");
       navigate("/");
+      dispatch(setLoading(isLoading));
     }
-  }, [data, isError, error, isSuccess, navigate, dispatch]);
+  }, [data, isLoading, isError, error, isSuccess, navigate, dispatch]);
 
   return (
     <div>

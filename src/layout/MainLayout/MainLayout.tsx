@@ -4,7 +4,7 @@ import Home from "../../pages/Home/Home";
 import FooterSection from "../../pages/shared/Footer/Footer";
 import { ToastContainer } from "react-toastify";
 import { useAppDispatch } from "../../redux/hook";
-import { setUser } from "../../redux/features/auth/authSlice";
+import { setLoading, setUser } from "../../redux/features/auth/authSlice";
 
 const MainLayout = () => {
   const dispatch = useAppDispatch();
@@ -12,6 +12,7 @@ const MainLayout = () => {
   if (auth) {
     dispatch(setUser(auth));
   }
+  dispatch(setLoading(false));
   return (
     <div>
       <Header />

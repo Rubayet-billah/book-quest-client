@@ -4,7 +4,7 @@ import { useLoginUserMutation } from "../../redux/features/auth/authApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "../../redux/hook";
-import { setUser } from "../../redux/features/auth/authSlice";
+import { setLoading, setUser } from "../../redux/features/auth/authSlice";
 
 const Login = () => {
   const [login, { data, isLoading, isError, isSuccess }] =
@@ -24,6 +24,7 @@ const Login = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(setLoading(true));
     const formData = {
       email,
       password,
@@ -40,8 +41,9 @@ const Login = () => {
       dispatch(setUser({ email, accessToken }));
       toast.success("Login successfull");
       navigate("/");
+      dispatch(setLoading(isLoading));
     }
-  }, [data, isError, isSuccess, navigate, dispatch]);
+  }, [data, isLoading, isError, isSuccess, navigate, dispatch]);
 
   return (
     <div>
