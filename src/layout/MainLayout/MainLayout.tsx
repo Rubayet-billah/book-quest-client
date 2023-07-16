@@ -3,8 +3,15 @@ import Header from "../../pages/shared/Header/Header";
 import Home from "../../pages/Home/Home";
 import FooterSection from "../../pages/shared/Footer/Footer";
 import { ToastContainer } from "react-toastify";
+import { useAppDispatch } from "../../redux/hook";
+import { setUser } from "../../redux/features/auth/authSlice";
 
 const MainLayout = () => {
+  const dispatch = useAppDispatch();
+  const auth = JSON.parse(localStorage.getItem("auth"));
+  if (auth) {
+    dispatch(setUser(auth));
+  }
   return (
     <div>
       <Header />

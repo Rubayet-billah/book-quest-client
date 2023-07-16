@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface IAuth {
@@ -21,6 +22,7 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction) => {
       state.user.email = action.payload.email;
       state.user.accessToken = action.payload.accessToken;
+      localStorage.setItem("auth", JSON.stringify(action.payload));
     },
   },
 });
