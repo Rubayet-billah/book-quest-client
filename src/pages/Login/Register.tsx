@@ -3,10 +3,13 @@ import { Label, TextInput, Checkbox, Button } from "flowbite-react";
 import { useRegisterUserMutation } from "../../redux/features/auth/authApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { useAppDispatch } from "../../redux/hook";
+import { setUser } from "../../redux/features/auth/authSlice";
 
 const Register = () => {
   const [register, { data, error, isError, isLoading, isSuccess }] =
     useRegisterUserMutation();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -44,7 +47,9 @@ const Register = () => {
     if (isError) {
       toast.error(error?.data?.message);
     }
-    if (isSuccess) {
+    if (isSuccess && data) {
+      const { email, accessToken } = data?.data;
+      dispatch(setUser({ email, accessToken }));
       toast.success("Registration successfull");
       navigate("/");
     }
