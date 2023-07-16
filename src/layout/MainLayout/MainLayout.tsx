@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Header from "../../pages/shared/Header/Header";
 import Home from "../../pages/Home/Home";
 import FooterSection from "../../pages/shared/Footer/Footer";
+import { ToastContainer } from "react-toastify";
 
 const MainLayout = () => {
   return (
@@ -13,6 +14,7 @@ const MainLayout = () => {
         </Outlet>
       </section>
       <FooterSection />
+      <ToastContainer position="top-center" />
     </div>
   );
 };

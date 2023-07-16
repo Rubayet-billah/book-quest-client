@@ -1,11 +1,17 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { Label, TextInput, Checkbox, Button } from "flowbite-react";
+import { useRegisterUserMutation } from "../../redux/features/auth/authApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const Register = () => {
+  const [register, { data, error, isError, isLoading, isSuccess }] =
+    useRegisterUserMutation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const navigate = useNavigate();
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -26,12 +32,23 @@ const Register = () => {
         email,
         password,
       };
-      console.log(formData);
+      register(formData);
       setPasswordMatch(true);
     } else {
       setPasswordMatch(false);
     }
   };
+
+  useEffect(() => {
+    console.log(data, isError, error);
+    if (isError) {
+      toast.error(error?.data?.message);
+    }
+    if (isSuccess) {
+      toast.success("Registration successfull");
+      navigate("/");
+    }
+  }, [data, isError, error, isSuccess, navigate]);
 
   return (
     <div>

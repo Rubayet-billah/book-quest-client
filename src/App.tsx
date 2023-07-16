@@ -1,9 +1,10 @@
-import Home from "./pages/Home/Home";
+import MainLayout from "./layout/MainLayout/MainLayout";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <div>
-      <Home />
+      <MainLayout />
     </div>
   );
 }
