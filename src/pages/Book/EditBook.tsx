@@ -11,11 +11,16 @@ const EditBook = () => {
 
   console.log(id, data);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  const [editedBook, setEditedBook] = useState<IBook>(data?.data);
+  const [editedBook, setEditedBook] = useState<IBook>(
+    data?.data || {
+      title: "",
+      author: "",
+      price: "",
+      genre: "",
+      publishYear: "",
+      featured: false,
+    }
+  );
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -27,6 +32,10 @@ const EditBook = () => {
     e.preventDefault();
     console.log(editedBook);
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
