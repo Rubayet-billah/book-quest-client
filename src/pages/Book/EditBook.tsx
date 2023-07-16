@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { Label, TextInput, Checkbox, Button } from "flowbite-react";
 import { IBook } from "./interface";
 import { useParams } from "react-router-dom";
@@ -9,18 +9,7 @@ const EditBook = () => {
   const { id } = useParams();
   const { data, isError, isLoading, isSuccess } = useGetBookQuery(id as string);
 
-  console.log(id, data);
-
-  const [editedBook, setEditedBook] = useState<IBook>(
-    data?.data || {
-      title: "",
-      author: "",
-      price: "",
-      genre: "",
-      publishYear: "",
-      featured: false,
-    }
-  );
+  const [editedBook, setEditedBook] = useState<IBook>(data?.data);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -32,6 +21,10 @@ const EditBook = () => {
     e.preventDefault();
     console.log(editedBook);
   };
+
+  useEffect(() => {
+    setEditedBook(data?.data);
+  }, [data]);
 
   if (isLoading) {
     return <Loading />;
@@ -56,7 +49,7 @@ const EditBook = () => {
             required
             type="text"
             name="title"
-            value={editedBook.title}
+            value={editedBook?.title}
             onChange={handleInputChange}
           />
         </div>
@@ -70,7 +63,7 @@ const EditBook = () => {
             required
             type="text"
             name="author"
-            value={editedBook.author}
+            value={editedBook?.author}
             onChange={handleInputChange}
           />
         </div>
@@ -84,7 +77,7 @@ const EditBook = () => {
             required
             type="text"
             name="price"
-            value={editedBook.price}
+            value={editedBook?.price}
             onChange={handleInputChange}
           />
         </div>
@@ -98,7 +91,7 @@ const EditBook = () => {
             required
             type="text"
             name="genre"
-            value={editedBook.genre}
+            value={editedBook?.genre}
             onChange={handleInputChange}
           />
         </div>
@@ -112,7 +105,7 @@ const EditBook = () => {
             required
             type="text"
             name="publishYear"
-            value={editedBook.publishYear}
+            value={editedBook?.publishYear}
             onChange={handleInputChange}
           />
         </div>
@@ -120,7 +113,7 @@ const EditBook = () => {
           <Checkbox
             id="featured"
             name="featured"
-            checked={editedBook.featured}
+            checked={editedBook?.featured}
             onChange={handleInputChange}
           />
           <Label htmlFor="featured">Featured</Label>
