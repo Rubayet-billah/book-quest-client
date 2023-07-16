@@ -5,11 +5,7 @@ import { useParams } from "react-router-dom";
 import { useGetBookQuery } from "../../redux/features/book/bookApi";
 import Loading from "../shared/Loading/Loading";
 
-interface EditBookProps {
-  book: IBook;
-}
-
-const EditBook: React.FC<EditBookProps> = () => {
+const EditBook = () => {
   const { id } = useParams();
   const { data, isError, isLoading, isSuccess } = useGetBookQuery(id as string);
 
@@ -19,14 +15,6 @@ const EditBook: React.FC<EditBookProps> = () => {
     return <Loading />;
   }
 
-  // const [editedBook, setEditedBook] = useState<IBook>({
-  //   title: "The Great Gatsby",
-  //   author: "F. Scott Fitzgerald",
-  //   price: "$12.99",
-  //   genre: "Fiction",
-  //   publishYear: "1925",
-  //   featured: true,
-  // });
   const [editedBook, setEditedBook] = useState<IBook>(data?.data);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

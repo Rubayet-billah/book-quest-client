@@ -1,7 +1,16 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { Label, TextInput, Checkbox, Button } from "flowbite-react";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
+import { useAddBookMutation } from "../../redux/features/book/bookApi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddNewBook = () => {
+  const [addBook, { data, isLoading, isError, isSuccess }] =
+    useAddBookMutation();
+  const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [book, setBook] = useState({
     title: "",
     author: "",
@@ -19,8 +28,21 @@ const AddNewBook = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(book);
+    console.log({ ...book, authorEmail: user?.email });
+    addBook({ ...book, authorEmail: user?.email });
   };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
+    }
+    if (isSuccess && data) {
+      const { message } = data;
+      toast.success(message);
+      navigate("/");
+      // dispatch(setLoading(isLoading));
+    }
+  }, [data, isLoading, isError, isSuccess, navigate, dispatch]);
 
   return (
     <form

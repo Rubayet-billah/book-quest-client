@@ -1,21 +1,44 @@
 import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Card, Button, Label, TextInput, Textarea } from "flowbite-react";
-import { useParams } from "react-router-dom";
 import { useGetBookQuery } from "../../redux/features/book/bookApi";
 import Loading from "../shared/Loading/Loading";
 import { IBook, IReview } from "./interface";
+import { useAppSelector } from "../../redux/hook";
+import { toast } from "react-toastify";
 
 const BookDetails: React.FC = () => {
   const { id } = useParams();
   const { data, isError, isLoading, isSuccess } = useGetBookQuery(id as string);
+  const { user } = useAppSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   console.log(id, data);
 
   if (isLoading) {
     return <Loading />;
   }
-  const { title, author, price, genre, publishYear, featured, reviews } =
-    data.data as IBook;
+  const {
+    _id,
+    title,
+    author,
+    authorEmail,
+    price,
+    genre,
+    publishYear,
+    featured,
+    reviews,
+  } = data.data as IBook;
+
+  const handleEditClick = (authorEmail) => {
+    if (user?.email !== authorEmail) {
+      toast.error("Unathorized author");
+    } else {
+      navigate(`/edit/${_id}`);
+    }
+  };
+
+  const handleDeleteClick = () => {};
 
   return (
     <div className="flex flex-col items-center">
@@ -46,6 +69,15 @@ const BookDetails: React.FC = () => {
           <p className="text-gray-600">
             <strong>Featured:</strong> {featured ? "Yes" : "No"}
           </p>
+        </div>
+
+        <div className="flex justify-between">
+          <Button color="purple" onClick={() => handleEditClick(authorEmail)}>
+            Edit Book
+          </Button>
+          <Button color="red" onClick={handleDeleteClick}>
+            Delete Book
+          </Button>
         </div>
         <div className="mb-4">
           <h2 className="text-xl font-bold">Reviews</h2>

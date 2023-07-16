@@ -12,7 +12,15 @@ const bookApi = apiSlice.injectEndpoints({
         url: `/books/${id}`,
       }),
     }),
+    addBook: builder.mutation({
+      query: (data) => ({
+        url: `/books`,
+        body: data,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
-export const { useGetBooksQuery, useGetBookQuery } = bookApi;
+export const { useGetBooksQuery, useGetBookQuery, useAddBookMutation } =
+  bookApi;
