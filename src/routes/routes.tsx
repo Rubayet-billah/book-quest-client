@@ -22,8 +22,22 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      { path: "/edit", element: <EditBook /> },
-      { path: "/book/:id", element: <BookDetails /> },
+      {
+        path: "/edit",
+        element: (
+          <PrivateRoute>
+            <EditBook />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/book/:id",
+        element: (
+          <PrivateRoute>
+            <BookDetails />
+          </PrivateRoute>
+        ),
+      },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
     ],

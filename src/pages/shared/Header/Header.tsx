@@ -1,7 +1,11 @@
-import { Navbar } from "flowbite-react";
+import { Button, Navbar } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../redux/hook";
+import { removeUser } from "../../../redux/features/auth/authSlice";
 
 const Header = () => {
+  const { user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
   return (
     <div>
       <Navbar fluid rounded>
@@ -12,18 +16,24 @@ const Header = () => {
         </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse>
-          <Navbar.Link>
-            <Link to="/">Home</Link>
-          </Navbar.Link>
-          <Navbar.Link>
-            <Link to="/add">Add Book</Link>
-          </Navbar.Link>
-          <Navbar.Link>
-            <Link to="/login">Sign In</Link>
-          </Navbar.Link>
-          <Navbar.Link>
-            <Link to="/register">Sign Up</Link>
-          </Navbar.Link>
+          <Link to="/">Home</Link>
+
+          <Link to="/add">Add Book</Link>
+          {user?.email ? (
+            <Button
+              size="xs"
+              color="purple"
+              onClick={() => dispatch(removeUser())}
+            >
+              Sign Out
+            </Button>
+          ) : (
+            <>
+              <Link to="/login">Sign In</Link>
+
+              <Link to="/register">Sign Up</Link>
+            </>
+          )}
         </Navbar.Collapse>
       </Navbar>
     </div>

@@ -26,11 +26,16 @@ const authSlice = createSlice({
       state.user.accessToken = action.payload.accessToken;
       localStorage.setItem("auth", JSON.stringify(action.payload));
     },
+    removeUser: (state, action) => {
+      state.user.email = undefined;
+      state.user.accessToken = undefined;
+      localStorage.clear();
+    },
     setLoading: (state, action: PayloadAction) => {
       state.loading = action.payload;
     },
   },
 });
 
-export const { setUser, setLoading } = authSlice.actions;
+export const { setUser, setLoading, removeUser } = authSlice.actions;
 export default authSlice.reducer;
