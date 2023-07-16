@@ -1,13 +1,27 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { Label, TextInput, Checkbox, Button } from "flowbite-react";
 import { IBook } from "./interface";
-import { useParams } from "react-router-dom";
-import { useGetBookQuery } from "../../redux/features/book/bookApi";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useEditBookMutation,
+  useGetBookQuery,
+} from "../../redux/features/book/bookApi";
 import Loading from "../shared/Loading/Loading";
+import { toast } from "react-toastify";
 
 const EditBook = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { data, isError, isLoading, isSuccess } = useGetBookQuery(id as string);
+  const [
+    editBook,
+    {
+      data: editData,
+      isError: isEditError,
+      isLoading: isEditLoading,
+      isSuccess: isEditSuccess,
+    },
+  ] = useEditBookMutation();
 
   const [editedBook, setEditedBook] = useState<IBook>(data?.data);
 
@@ -19,12 +33,22 @@ const EditBook = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(editedBook);
+    editBook({ id, data: editedBook });
   };
 
   useEffect(() => {
     setEditedBook(data?.data);
   }, [data]);
+
+  useEffect(() => {
+    if (isEditError) {
+      toast.error("Something went wrong");
+    }
+    if (isEditSuccess) {
+      toast.success("Book edited successfully");
+      navigate("/");
+    }
+  }, [isEditError, isEditSuccess]);
 
   if (isLoading) {
     return <Loading />;
@@ -119,7 +143,7 @@ const EditBook = () => {
           <Label htmlFor="featured">Featured</Label>
         </div>
         <Button color="purple" type="submit">
-          Save Book
+          Edit Book
         </Button>
       </form>
     </div>
