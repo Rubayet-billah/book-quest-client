@@ -3,7 +3,7 @@ import BookCard from "../Book/BookCard";
 import { IBook } from "../Book/interface";
 
 const Home = () => {
-  const { data: books, isError } = useGetBooksQuery(undefined);
+  const { data: books } = useGetBooksQuery(undefined);
 
   return (
     <div>

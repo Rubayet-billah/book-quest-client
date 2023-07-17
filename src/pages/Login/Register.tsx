@@ -1,5 +1,6 @@
-import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
-import { Label, TextInput, Checkbox, Button } from "flowbite-react";
+/* eslint-disable no-unsafe-optional-chaining */
+import { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import { Label, TextInput, Button } from "flowbite-react";
 import { useRegisterUserMutation } from "../../redux/features/auth/authApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
@@ -45,7 +46,7 @@ const Register = () => {
 
   useEffect(() => {
     if (isError) {
-      toast.error(error?.data?.message);
+      toast.error("Something went wrong");
     }
     if (isSuccess && data) {
       const { email, accessToken } = data?.data;

@@ -1,6 +1,5 @@
-import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Card, Button, Label, TextInput, Textarea } from "flowbite-react";
+import { Card, Button, Textarea } from "flowbite-react";
 import { useGetBookQuery } from "../../redux/features/book/bookApi";
 import Loading from "../shared/Loading/Loading";
 import { IBook, IReview } from "./interface";
@@ -9,7 +8,7 @@ import { toast } from "react-toastify";
 
 const BookDetails: React.FC = () => {
   const { id } = useParams();
-  const { data, isError, isLoading, isSuccess } = useGetBookQuery(id as string);
+  const { data, isLoading } = useGetBookQuery(id as string);
   const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
@@ -30,7 +29,7 @@ const BookDetails: React.FC = () => {
     reviews,
   } = data.data as IBook;
 
-  const handleEditClick = (authorEmail) => {
+  const handleEditClick = (authorEmail: string) => {
     if (user?.email !== authorEmail) {
       toast.error("Unathorized author");
     } else {

@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface IAuth {
-  user: {
-    email: string | undefined;
-    accessToken: string | undefined;
-  };
+export interface IAuth {
+  email: string | undefined;
+  accessToken: string | undefined;
+}
+
+export interface IAuthState {
+  user: IAuth;
   loading: boolean;
 }
 
-const initialState: IAuth = {
+const initialState: IAuthState = {
   user: {
     email: undefined,
     accessToken: undefined,
@@ -21,17 +23,17 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction) => {
+    setUser: (state, action: PayloadAction<IAuth>) => {
       state.user.email = action.payload.email;
       state.user.accessToken = action.payload.accessToken;
       localStorage.setItem("auth", JSON.stringify(action.payload));
     },
-    removeUser: (state, action) => {
+    removeUser: (state) => {
       state.user.email = undefined;
       state.user.accessToken = undefined;
       localStorage.clear();
     },
-    setLoading: (state, action: PayloadAction) => {
+    setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
   },

@@ -1,3 +1,7 @@
+/* eslint-disable no-unsafe-optional-chaining */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { Label, TextInput, Checkbox, Button } from "flowbite-react";
 import { useLoginUserMutation } from "../../redux/features/auth/authApi";
@@ -34,7 +38,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isError) {
-      toast.error(error?.data?.message);
+      toast.error("Something went wrong");
     }
     if (isSuccess && data) {
       const { email, accessToken } = data?.data;

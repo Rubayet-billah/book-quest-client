@@ -34,7 +34,7 @@ const AddNewBook = () => {
 
   useEffect(() => {
     if (isError) {
-      toast.error(error?.data?.message);
+      toast.error("Something went wrong");
     }
     if (isSuccess && data) {
       const { message } = data;

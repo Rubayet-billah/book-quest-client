@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { Label, TextInput, Checkbox, Button } from "flowbite-react";
 import { IBook } from "./interface";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,13 +12,13 @@ import { toast } from "react-toastify";
 const EditBook = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data, isError, isLoading, isSuccess } = useGetBookQuery(id as string);
+  const { data, isLoading } = useGetBookQuery(id as string);
   const [
     editBook,
     {
-      data: editData,
+      // data: editData,
       isError: isEditError,
-      isLoading: isEditLoading,
+      // isLoading: isEditLoading,
       isSuccess: isEditSuccess,
     },
   ] = useEditBookMutation();
