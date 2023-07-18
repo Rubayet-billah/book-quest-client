@@ -1,18 +1,48 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Card, Button, Textarea } from "flowbite-react";
-import { useGetBookQuery } from "../../redux/features/book/bookApi";
+import {
+  useDeleteBookMutation,
+  useGetBookQuery,
+} from "../../redux/features/book/bookApi";
 import Loading from "../shared/Loading/Loading";
 import { IBook, IReview } from "./interface";
 import { useAppSelector } from "../../redux/hook";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const BookDetails: React.FC = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetBookQuery(id as string);
+  const [deleteBook, { isError, isSuccess }] = useDeleteBookMutation();
   const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
   console.log(id, data);
+
+  const handleEditClick = (authorEmail: string) => {
+    if (user?.email !== authorEmail) {
+      toast.error("Unathorized author");
+    } else {
+      navigate(`/edit/${_id}`);
+    }
+  };
+
+  const handleDeleteClick = (id: string) => {
+    if (user?.email !== authorEmail) {
+      toast.error("Unathorized author");
+    } else if (user?.email === authorEmail) {
+      deleteBook(id);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Book deleted successfully");
+      navigate("/");
+    } else if (isError) {
+      toast.error("Something went wrong");
+    }
+  }, [isSuccess, isError, navigate]);
 
   if (isLoading) {
     return <Loading />;
@@ -27,17 +57,7 @@ const BookDetails: React.FC = () => {
     publishYear,
     featured,
     reviews,
-  } = data.data as IBook;
-
-  const handleEditClick = (authorEmail: string) => {
-    if (user?.email !== authorEmail) {
-      toast.error("Unathorized author");
-    } else {
-      navigate(`/edit/${_id}`);
-    }
-  };
-
-  const handleDeleteClick = () => {};
+  } = data?.data as IBook;
 
   return (
     <div className="flex flex-col items-center">
@@ -49,10 +69,12 @@ const BookDetails: React.FC = () => {
         <div className="mb-4">
           <h2 className="text-xl font-bold">Description</h2>
           <p className="text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-            ullamcorper mi ut aliquam facilisis. Quisque vestibulum risus sed
-            fermentum cursus.
+            Immerse yourself in the captivating world of literature with this
+            extraordinary collection of books. From heartwarming tales of love
+            and friendship to thrilling adventures filled with mystery and
+            suspense, this diverse selection has something for every reader.
           </p>
+          <p className="text-gray-600"></p>
         </div>
         <div className="mb-4">
           <h2 className="text-xl font-bold">Book Details</h2>
@@ -74,7 +96,7 @@ const BookDetails: React.FC = () => {
           <Button color="purple" onClick={() => handleEditClick(authorEmail)}>
             Edit Book
           </Button>
-          <Button color="red" onClick={handleDeleteClick}>
+          <Button color="red" onClick={() => handleDeleteClick(_id as string)}>
             Delete Book
           </Button>
         </div>
