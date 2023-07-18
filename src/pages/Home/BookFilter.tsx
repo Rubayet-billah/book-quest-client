@@ -61,8 +61,8 @@ const BookFilter: React.FC<any> = ({ books }) => {
           onChange={handleSortDirectionChange}
           className="border border-gray-300 rounded px-4 py-2"
         >
-          <option value="asc">Newest</option>
-          <option value="desc">Oldest</option>
+          <option value="asc">Oldest</option>
+          <option value="desc">Newest</option>
         </select>
       </div>
     </div>

@@ -6,6 +6,7 @@ const bookApi = apiSlice.injectEndpoints({
       query: () => ({
         url: "/books",
       }),
+      providesTags: ["Book"],
     }),
     getBook: builder.query({
       query: (id: string) => ({
@@ -18,6 +19,7 @@ const bookApi = apiSlice.injectEndpoints({
         body: data,
         method: "POST",
       }),
+      invalidatesTags: ["Book"],
     }),
     editBook: builder.mutation({
       query: ({ id, data }) => ({

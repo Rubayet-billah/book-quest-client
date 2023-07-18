@@ -8,5 +8,6 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://book-quest-server.vercel.app/api/v1",
   }),
+  tagTypes: ["Book"],
   endpoints: () => ({}),
 });

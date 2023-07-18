@@ -9,7 +9,7 @@ export interface IFilterState {
 const initialState: IFilterState = {
   searchText: "",
   genreFilter: null,
-  sortDirection: "asc",
+  sortDirection: "desc",
 };
 
 const filterSlice = createSlice({
