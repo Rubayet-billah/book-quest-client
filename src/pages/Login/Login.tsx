@@ -41,8 +41,8 @@ const Login = () => {
       toast.error("Something went wrong");
     }
     if (isSuccess && data) {
-      const { email, accessToken } = data?.data;
-      dispatch(setUser({ email, accessToken }));
+      const { email, accessToken, wishlist } = data?.data;
+      dispatch(setUser({ email, accessToken, wishlist }));
       toast.success("Login successfull");
       navigate("/");
       dispatch(setLoading(isLoading));

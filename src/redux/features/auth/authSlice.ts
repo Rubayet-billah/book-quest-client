@@ -4,6 +4,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 export interface IAuth {
   email: string | undefined;
   accessToken: string | undefined;
+  wishlist?: string[];
 }
 
 export interface IAuthState {
@@ -26,6 +27,7 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<IAuth>) => {
       state.user.email = action.payload.email;
       state.user.accessToken = action.payload.accessToken;
+      state.user.wishlist = action.payload.wishlist;
       localStorage.setItem("auth", JSON.stringify(action.payload));
     },
     removeUser: (state) => {

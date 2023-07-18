@@ -9,15 +9,21 @@ import { IBook, IReview } from "./interface";
 import { useAppSelector } from "../../redux/hook";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import {
+  useGetUserQuery,
+  useWishlistBookMutation,
+} from "../../redux/features/auth/authApi";
 
 const BookDetails: React.FC = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetBookQuery(id as string);
   const [deleteBook, { isError, isSuccess }] = useDeleteBookMutation();
+  const [wishlistBook] = useWishlistBookMutation();
   const { user } = useAppSelector((state) => state.auth);
+  const { data: updatedUser, isLoading: updateUserIsLoading } = useGetUserQuery(
+    user?.email as string
+  );
   const navigate = useNavigate();
-
-  console.log(id, data);
 
   const handleEditClick = (authorEmail: string) => {
     if (user?.email !== authorEmail) {
@@ -35,6 +41,10 @@ const BookDetails: React.FC = () => {
     }
   };
 
+  const handleWishlistClick = (id: string) => {
+    wishlistBook({ userEmail: user?.email, bookId: id });
+  };
+
   useEffect(() => {
     if (isSuccess) {
       toast.success("Book deleted successfully");
@@ -44,11 +54,11 @@ const BookDetails: React.FC = () => {
     }
   }, [isSuccess, isError, navigate]);
 
-  if (isLoading) {
+  if (isLoading || updateUserIsLoading) {
     return <Loading />;
   }
   const {
-    _id,
+    _id = "",
     title,
     author,
     authorEmail,
@@ -58,14 +68,28 @@ const BookDetails: React.FC = () => {
     featured,
     reviews,
   } = data?.data as IBook;
-
   return (
     <div className="flex flex-col items-center">
       <Card className="w-full max-w-3xl p-4">
-        <div className="mb-4">
-          <h1 className="text-3xl font-bold">{title}</h1>
-          <p className="text-gray-600">{author}</p>
+        <div className="mb-4 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold">{title}</h1>
+            <p className="text-gray-600">{author}</p>
+          </div>
+          {user && (
+            <Button
+              color={
+                updatedUser?.data?.wishlist?.includes(_id) ? "green" : "gray"
+              }
+              onClick={() => handleWishlistClick(_id)}
+            >
+              {updatedUser?.data?.wishlist?.includes(_id)
+                ? "Remove from Wishlist"
+                : "Add to Wishlist"}
+            </Button>
+          )}
         </div>
+
         <div className="mb-4">
           <h2 className="text-xl font-bold">Description</h2>
           <p className="text-gray-600">
